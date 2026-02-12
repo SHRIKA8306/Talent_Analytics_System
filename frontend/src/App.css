@@ -82,3 +82,12 @@
   background-attachment: fixed;
   background-size: cover;
 }
+
+/* Global Placeholder Styling */
+::placeholder {
+  color: #c4c9cf !important;
+  font-size: 0.875rem;
+  font-weight: 400;
+
+}
+

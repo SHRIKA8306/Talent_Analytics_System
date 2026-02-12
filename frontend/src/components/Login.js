@@ -61,11 +61,11 @@ export default function Login() {
                             <form onSubmit={handleSubmit}>
                                 <div className='mb-4'>
                                      <label className='form-label text-muted fw-semibold'>Username</label>
-                                       <input type='text' name='username' className='form-control form-control-lg border-0 shadow-sm' style={{ background: '#f8fafc' }} placeholder='Enter your username' onChange={handleChange} required/>
+                                       <input type='text' name='username' className='form-control form-control-lg border-1 shadow-sm' style={{ background: '#f8fafc' }} placeholder='Enter your username' onChange={handleChange} required/>
                                 </div>
                                 <div className='mb-4'>
                                      <label className='form-label text-muted fw-semibold'>Password</label>
-                                       <input type='password' name='password' className='form-control form-control-lg border-0 shadow-sm' style={{ background: '#f8fafc' }} placeholder='Enter your password' onChange={handleChange} required/>
+                                       <input type='password' name='password' className='form-control form-control-lg border-1 shadow-sm' style={{ background: '#f8fafc' }} placeholder='Enter your password' onChange={handleChange} required/>
                                 </div>
                                 <button type='submit' className='btn btn-gradient w-100 fw-bold shadow-sm py-3 mt-3' style={{ borderRadius: '12px' }}>Login In</button>
                             </form>
