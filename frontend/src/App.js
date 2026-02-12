@@ -2,8 +2,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Signup from './components/Signup';
 import Login from './components/Login';
-import Main from './components/Main';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import StudentDashboard from './components/StudentDashboard';
+import { Navigate, Route, Routes } from 'react-router-dom';
 function PrivateRoute({children}){
   const token=localStorage.getItem('token');
   return token?children:<Navigate to='/login'/>
@@ -13,7 +13,7 @@ function App() {
     <Routes>
       <Route path='/' element={
         <PrivateRoute>
-          <Main/>
+          <StudentDashboard/>
         </PrivateRoute>
       }/>
       <Route path='/login' element={<Login/>}/>

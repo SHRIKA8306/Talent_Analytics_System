@@ -38,41 +38,38 @@ export default function Signup() {
         }
     }
   return (
-    <div  className='container py-5'>
-        <div className='row justify-content-center'>
-            <div className='col-11 col-sm-8 col-md-6 col-lg-4'>
-                <div className='card shadow-sm'>
-                    <div className='card-body p-4'>
-                        <h3 className='mb-4 text-center'><span className='text-gradient'>Create Account</span></h3>
-                        {error&&<div className='alert alert-danger'>{error}</div>}
-                        <form onSubmit={handleSubmit}>
-                            <div className='row'>
+    <div className='bg-page-gradient min-vh-100 d-flex align-items-center py-5'>
+        <div className='container'>
+            <div className='row justify-content-center'>
+                <div className='col-11 col-sm-8 col-md-7 col-lg-6 col-xl-5'>
+                    <div className='card shadow border-2 rounded-4' style={{ background: 'rgba(255, 255, 255, 0.95)' }}>
+                        <div className='card-body p-5 p-md-4'>
+                            <h3 className='mb-4 text-center'><span className='text-gradient'>Create Account</span></h3>
+                            {error&&<div className='alert alert-danger'>{error}</div>}
+                            <form onSubmit={handleSubmit}>
                                 <div className='mb-3'>
-                                   <label className='form-label'>Username</label>
-                                   <input type='text' name='username' className='form-control' placeholder='Enter your username' onChange={handleChange} required/>
+                                   <label className='form-label text-muted fw-semibold'>Username</label>
+                                   <input type='text' name='username' className='form-control form-control-lg border-0 shadow-sm' style={{ background: '#f8fafc' }} placeholder='Enter your username' onChange={handleChange} required/>
                                 </div>
+                                <div className='mb-3'>
+                                     <label className='form-label text-muted fw-semibold'>Email</label>
+                                       <input type='text' name='email' className='form-control form-control-lg border-0 shadow-sm' style={{ background: '#f8fafc' }} placeholder='Enter your email' onChange={handleChange} required/>
+                                </div>
+                                <div className='mb-3'>
+                                     <label className='form-label text-muted fw-semibold'>Password</label>
+                                       <input type='password' name='password' className='form-control form-control-lg border-0 shadow-sm' style={{ background: '#f8fafc' }} placeholder='Min 6 characters' onChange={handleChange} required/>
+                                </div>
+                                <button type='submit' className='btn btn-gradient w-100 fw-bold shadow-sm py-3 mt-3' style={{ borderRadius: '12px' }}>Create Account</button>
+                            </form>
+                            <div className='text-center mt-4'>
+                                <span className='text-muted'>Already have an account?</span>
+                                <Link to="/login" className='text-decoration-none fw-bold ms-2' style={{ color: '#7c3aed' }}>Login in</Link>
                             </div>
-                            <div className='mb-3'>
-                                 <label className='form-label'>Email</label>
-                                   <input type='text' name='email' className='form-control' placeholder='Enter your email' onChange={handleChange} required/>
-                            </div>
-                            <div className='mb-3'>
-                                 <label className='form-label'>Password</label>
-                                   <input type='password' name='password' className='form-control' placeholder='Password should be min 6 characters' onChange={handleChange} required/>
-                            </div>
-                            <button type='submit' className='btn w-100 fw-bold shadow-sm btn-gradient' style={{ padding: '10px' }}>Create Account</button>
-                        </form>
-                        <div className='text-center mt-3'>
-                            <span>Already have an account? </span>
-                            <Link to="/login" className='text-decoration-none fw-bold' style={{ color: '#7c3aed' }}>Login in</Link>
                         </div>
                     </div>
-
                 </div>
             </div>
-
         </div>
-      
     </div>
   )
 }

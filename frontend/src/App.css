@@ -40,13 +40,30 @@
 
 /* Custom UI Gradients */
 .btn-gradient {
-  background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+  background: linear-gradient(135deg, #7779f3 0%, #a855f7 50%, #ec4899 100%);
   border: none;
-  color: white;
+  color: white !important;
+  transition: all 0.3s ease;
+}
+
+.btn-gradient:hover,
+.btn-gradient:focus {
+  background: linear-gradient(135deg, #7779f3 0%, #a855f7 50%, #ec4899 100%);
+  color: white !important;
+  filter: brightness(1.1);
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+  transform: translateY(-1px);
+}
+
+.btn-gradient:active {
+  background: linear-gradient(135deg, #7779f3 0%, #a855f7 50%, #ec4899 100%);
+  color: white !important;
+  filter: brightness(0.95);
+  transform: translateY(0);
 }
 
 .text-gradient {
-  background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+  background: linear-gradient(135deg, #7779f3 0%, #a855f7 50%, #ec4899 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -58,4 +75,10 @@
   background: linear-gradient(135deg, #f43f5e 0%, #fb7185 100%);
   border: none;
   color: white;
+}
+
+.bg-page-gradient {
+  background: linear-gradient(to right bottom, #817bf1, #7c3aed, #c026d3, #db2777);
+  background-attachment: fixed;
+  background-size: cover;
 }
