@@ -5,7 +5,7 @@ const {User,loginSchema}=require('../model/user');
 const { request } = require('express');
 const passport=require('passport');
 
-//post/api/auth
+//post/api/auth - Username/Password Login
 router.post('/',async(req,res)=>{
     //1.validate input
     const{error,value}=loginSchema.validate(req.body);
@@ -18,7 +18,7 @@ router.post('/',async(req,res)=>{
     if(!ok) return res.status(401).send('Invalid email or password')
     //create jwt token
     const token=jwt.sign(
-        {id:user._id,email:user.email,username:user.username},
+        {id:user._id,email:user.email,username:user.username,role:user.role},
         process.env.JWT_SECRET||"shri@march",
         {expiresIn:process.env.JWT_EXPRIRES_IN||'1h'}    
     )
@@ -28,9 +28,12 @@ router.post('/',async(req,res)=>{
         token,
         id:user._id,
         username:user.username,
-        email:user.email
+        email:user.email,
+        role:user.role
     })
 })
+
+// ────── GOOGLE OAUTH (SINGLE SETUP FOR BOTH STUDENT AND ADMIN) ──────
 
 // Google Auth Trigger
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
@@ -39,15 +42,70 @@ router.get('/google', passport.authenticate('google', { scope: ['profile', 'emai
 router.get('/google/callback', 
   passport.authenticate('google', { failureRedirect: '/login' }),
   (req, res) => {
-    const token = jwt.sign(
-        { id: req.user._id, email: req.user.email, username: req.user.username },
-        process.env.JWT_SECRET || "shri@march",
-        { expiresIn: process.env.JWT_EXPRIRES_IN || '1h' }
-    );
-    // Redirect to frontend with token in query param
-    // The frontend should pick this up and store it in localStorage
-    res.redirect(`http://localhost:3000/login?token=${token}`);
+    // Get the role from query parameter (student or admin)
+    const role = req.query.role || 'student';
+    
+    // Update user role if provided
+    User.findByIdAndUpdate(req.user._id, { role: role }, { new: true }).then(updatedUser => {
+      const token = jwt.sign(
+          { id: updatedUser._id, email: updatedUser.email, username: updatedUser.username, role: updatedUser.role },
+          process.env.JWT_SECRET || "shri@march",
+          { expiresIn: process.env.JWT_EXPRIRES_IN || '7d' }
+      );
+      res.redirect(`http://localhost:3000/dashboard?token=${token}&role=${updatedUser.role}`);
+    }).catch(err => {
+      res.redirect(`http://localhost:3000/login?error=Failed to set role`);
+    });
   }
 );
+
+// ────── SIGNUP WITH JWT ──────
+router.post('/signup', async(req, res)=>{
+  try {
+    const { username, email, password, role } = req.body;
+    
+    // Validate input
+    if (!username || !email || !password || !role) {
+      return res.status(400).send('Missing required fields');
+    }
+    
+    // Check if user already exists
+    const existingUser = await User.findOne({ email: email.toLowerCase() });
+    if (existingUser) {
+      return res.status(400).send('User already exists');
+    }
+    
+    // Hash password
+    const saltRounds = parseInt(process.env.SALT_ROUNDS) || 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    
+    // Create new user
+    const newUser = await User.create({
+      username,
+      email: email.toLowerCase(),
+      passwordHash: hashedPassword,
+      role: role // 'student' or 'admin'
+    });
+    
+    // Create JWT token
+    const token = jwt.sign(
+        { id: newUser._id, email: newUser.email, username: newUser.username, role: newUser.role },
+        process.env.JWT_SECRET || "shri@march",
+        { expiresIn: process.env.JWT_EXPRIRES_IN || '7d' }
+    );
+    
+    // Return token and user information
+    res.status(201).send({
+      message: "Signup successful",
+      token,
+      id: newUser._id,
+      username: newUser.username,
+      email: newUser.email,
+      role: newUser.role
+    });
+  } catch (err) {
+    res.status(500).send(err.message || 'Signup failed');
+  }
+});
 
 module.exports=router;

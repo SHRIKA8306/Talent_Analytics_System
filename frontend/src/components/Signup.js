@@ -7,10 +7,12 @@ export default function Signup() {
     const[data,setData]=useState({
         username:'',
         email:'',
-        password:''
+        password:'',
+        role:'student'
     })
     //to store the error
     const[error,setError]=useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const navigate=useNavigate();
     //to track the changes-handlechange
     const handleChange=(e)=>{
@@ -20,8 +22,17 @@ export default function Signup() {
         e.preventDefault();
         setError('')
         try{
-            await API.post('/api/users',data)
-            navigate('/login')
+            const signupData = { ...data, role: 'student' };
+            const{data:res}= await API.post('/api/users/register', signupData)
+            localStorage.setItem('token',res.token);
+            localStorage.setItem('role',res.role);
+            localStorage.setItem('username',res.username);
+            // Route based on role
+            if(res.role === 'admin'){
+                navigate('/admin')
+            } else {
+                navigate('/')
+            }
         }
         catch(err){
                console.error('Signup error:', err);
@@ -40,30 +51,43 @@ export default function Signup() {
   return (
     <div className='bg-page-gradient min-vh-100 d-flex align-items-center py-5'>
         <div className='container'>
-            <div className='row justify-content-center'>
-                <div className='col-11 col-sm-8 col-md-7 col-lg-6 col-xl-5'>
-                    <div className='card shadow border-2 rounded-4' style={{ background: 'rgba(255, 255, 255, 0.95)' }}>
-                        <div className='card-body p-5 p-md-4'>
-                            <h3 className='mb-4 text-center'><span className='text-gradient'>Create Account</span></h3>
-                            {error&&<div className='alert alert-danger'>{error}</div>}
+            <div className='row justify-content-center px-3'>
+                <div className='col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4'>
+                    <div className='card card-refined p-4 p-md-5'>
+                        <div className='card-body p-0'>
+                            <h2 className='mb-2 text-center'><span className='text-gradient fw-extrabold pb-1' style={{ fontSize: '2.2rem', letterSpacing: '-0.02em' }}>TAS Portal</span></h2>
+                            <p className='text-center text-muted small fw-medium mb-5'>Create your Talent Profile</p>
+                            
+                            {error&&<div className='alert alert-danger py-2 mb-4 small fw-bold border-0' style={{ backgroundColor: '#fef2f2', color: '#991b1b', borderRadius: '10px' }}>{error}</div>}
+                            
                             <form onSubmit={handleSubmit}>
-                                <div className='mb-3'>
-                                   <label className='form-label text-muted fw-semibold'>Username</label>
-                                   <input type='text' name='username' className='form-control form-control-lg border-1 shadow-sm' style={{ background: '#f8fafc' }} placeholder='Enter your username' onChange={handleChange} required/>
+                                <div className='mb-4'>
+                                   <label className='form-label text-muted small fw-bold ps-1 mb-2'>USERNAME</label>
+                                   <input type='text' name='username' className='form-control form-control-refined' placeholder='Choose a username' onChange={handleChange} required/>
                                 </div>
-                                <div className='mb-3'>
-                                     <label className='form-label text-muted fw-semibold'>Email</label>
-                                       <input type='text' name='email' className='form-control form-control-lg border-1 shadow-sm' style={{ background: '#f8fafc' }} placeholder='Enter your email' onChange={handleChange} required/>
+                                <div className='mb-4'>
+                                     <label className='form-label text-muted small fw-bold ps-1 mb-2'>EMAIL</label>
+                                       <input type='email' name='email' className='form-control form-control-refined' placeholder='Enter your email address' onChange={handleChange} required/>
                                 </div>
-                                <div className='mb-3'>
-                                     <label className='form-label text-muted fw-semibold'>Password</label>
-                                       <input type='password' name='password' className='form-control form-control-lg border-1 shadow-sm' style={{ background: '#f8fafc' }} placeholder='Enter min 6 characters' onChange={handleChange} required/>
+                                <div className='mb-5'>
+                                     <label className='form-label text-muted small fw-bold ps-1 mb-2'>PASSWORD</label>
+                                     <div className='position-relative'>
+                                       <input type={showPassword ? 'text' : 'password'} name='password' className='form-control form-control-refined' style={{ paddingRight: '55px' }} placeholder='Minimum 6 characters' onChange={handleChange} required/>
+                                       <button 
+                                         type='button' 
+                                         className='btn position-absolute end-0 top-50 translate-middle-y border-0 bg-transparent px-3' 
+                                         onClick={() => setShowPassword(!showPassword)}
+                                       >
+                                         <i className={`bi ${showPassword ? 'bi-eye-slash' : 'bi-eye'}`} style={{ color: '#94a3b8', fontSize: '1.1rem' }}></i>
+                                       </button>
+                                     </div>
                                 </div>
-                                <button type='submit' className='btn btn-gradient w-100 fw-bold shadow-sm py-3 mt-3' style={{ borderRadius: '12px' }}>Create Account</button>
+                                <button type='submit' className='btn btn-gradient w-100 fw-bold py-3 mb-4' style={{ borderRadius: '14px', fontSize: '1rem', letterSpacing: '0.01em' }}>Create account</button>
                             </form>
-                            <div className='text-center mt-4'>
-                                <span className='text-muted'>Already have an account?</span>
-                                <Link to="/login" className='text-decoration-none fw-bold ms-2' style={{ color: '#7c3aed' }}>Login in</Link>
+                            
+                            <div className='text-center mt-2'>
+                                <span className='text-muted small fw-medium'>Already have an account?</span>
+                                <Link to="/login" className='text-decoration-none fw-bold ms-2' style={{ color: '#7c3aed', fontSize: '0.95rem' }}>Log in</Link>
                             </div>
                         </div>
                     </div>

@@ -1,0 +1,60 @@
+=============================================================================
+TALENT ANALYTICS MINI SYSTEM - REQUIREMENTS & INSTALLATION
+=============================================================================
+
+INSTALL ALL PACKAGES WITH ONE COMMAND (from project root):
+npm run install-all
+
+OR INDIVIDUALLY:
+
+# Install Backend Dependencies
+cd backend
+npm install
+
+# Install Frontend Dependencies  
+cd frontend
+npm install
+
+=============================================================================
+BACKEND DEPENDENCIES (Node.js + Express + MongoDB)
+=============================================================================
+express - Web framework
+mongoose - MongoDB ODM
+jsonwebtoken - JWT authentication
+bcryptjs - Password hashing
+cors - Cross-origin requests
+dotenv - Environment variables
+nodemon - Auto-restart during development
+
+=============================================================================
+FRONTEND DEPENDENCIES (React)
+=============================================================================
+react - UI library
+react-dom - React DOM rendering
+react-router-dom - Client-side routing
+axios - HTTP client
+bootstrap - CSS framework
+react-bootstrap - Bootstrap React components
+recharts - Charts and graphs library
+
+=============================================================================
+QUICK START COMMANDS
+=============================================================================
+
+1. Install everything:
+   npm run install-all
+
+2. Start Backend (port 4000):
+   npm run dev-backend
+
+3. Start Frontend (port 3000):
+   npm run dev-frontend
+
+4. Start Both (Backend + Frontend):
+   npm run dev
+
+5. Create .env in backend folder:
+   MONGO_URI=mongodb://localhost:27017/talent-analytics
+   JWT_SECRET=your-secret-key-here
+
+For detailed setup, see QUICKSTART.md and README.md
