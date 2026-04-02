@@ -168,7 +168,7 @@ export default function EditProfile() {
                       )}
                       
                       <div className="position-absolute bottom-0 end-0 mb-3" style={{ transform: 'translate(25%, 25%)' }}>
-                        <label htmlFor="profileUpload" className="btn btn-sm btn-primary rounded-circle shadow" style={{ width: '36px', height: '36px', padding: '6px' }}>
+                        <label htmlFor="profileUpload" className="btn btn-sm btn-gradient rounded-circle shadow" style={{ width: '36px', height: '36px', padding: '6px' }}>
                           <i className="bi bi-camera-fill"></i>
                         </label>
                         <input 
@@ -246,7 +246,7 @@ export default function EditProfile() {
                           <label className='form-label small fw-bold text-muted mb-1'>LEVEL ({newSkillLevel}%)</label>
                           <input 
                             type='range' 
-                            className='form-range mt-2' 
+                            className='form-range custom-range mt-2' 
                             min='0' 
                             max='100' 
                             value={newSkillLevel}
@@ -256,7 +256,7 @@ export default function EditProfile() {
                         <div className='col-md-3'>
                           <button 
                             type='button' 
-                            className='btn btn-primary w-100 fw-bold py-2 shadow-sm'
+                            className='btn btn-gradient w-100 fw-bold py-2 shadow-sm'
                             style={{ borderRadius: '10px' }}
                             onClick={handleAddSkill}
                           >
@@ -283,14 +283,14 @@ export default function EditProfile() {
                           <div className='d-flex align-items-center gap-2'>
                             <input 
                               type='range' 
-                              className='form-range flex-grow-1' 
+                              className='form-range custom-range flex-grow-1' 
                               min='0' 
                               max='100' 
                               style={{ height: '1.2rem' }}
                               value={skill.level}
                               onChange={(e) => handleSkillLevelChange(index, e.target.value)}
                             />
-                            <span className='badge bg-primary bg-opacity-10 text-primary fw-bold' style={{ minWidth: '40px', fontSize: '0.75rem' }}>
+                            <span className='badge bg-indigo-subtle text-indigo fw-bold' style={{ minWidth: '40px', fontSize: '0.75rem' }}>
                               {skill.level}%
                             </span>
                           </div>

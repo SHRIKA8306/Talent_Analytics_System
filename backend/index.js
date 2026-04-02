@@ -6,7 +6,7 @@ const {User}=require('./model/user.js')
 const userRoutes=require('./routes/user.js')
 const authRoutes=require('./routes/auth.js')
 const profileRoutes=require('./routes/profile.js')
-const analyticsRoutes=require('./routes/analytics.js')
+const aiRoutes=require('./routes/ai_generate.js')
 const auths=require('./middleware/auth.js')
 const session = require('express-session');
 const passport = require('passport');
@@ -34,7 +34,7 @@ app.use('/api/auth',authRoutes)
 app.use('/api/profile',profileRoutes)
 app.use('/api/student/profile', profileRoutes)
 app.use('/api/student', profileRoutes)
-app.use('/api/analytics',analyticsRoutes)
+app.use('/api/ai', aiRoutes)
 db()
 app.get('/',(_req,res)=>{
     res.send("Api is running ")

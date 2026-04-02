@@ -25,8 +25,8 @@ export default function Leaderboard() {
     <div className='bg-page-gradient min-vh-100 py-5'>
       <div className='container'>
         <div className='d-flex justify-content-between align-items-center mb-4'>
-          <h2 className='text-gradient fw-bold'>🏆 Leaderboard</h2>
-          <Link to={localStorage.getItem('role') === 'admin' ? '/admin' : '/'} className='btn btn-outline-primary'>← Back to Dashboard</Link>
+          <h2 className='text-gradient fw-extrabold pb-1' style={{ fontSize: '2.4rem', letterSpacing: '-0.02em' }}>🏆 Leaderboard</h2>
+          <Link to='/' className='btn btn-gradient btn-md px-4 py-2 fw-bold shadow' style={{ borderRadius: '12px' }}>← Back to Dashboard</Link>
         </div>
 
         <div className='card shadow rounded-4' style={{ background: 'rgba(255, 255, 255, 0.95)' }}>
@@ -52,10 +52,10 @@ export default function Leaderboard() {
                     {profiles.map((profile, idx) => (
                       <tr key={profile._id} style={{ borderBottom: '1px solid #e2e8f0' }}>
                         <td className='fw-bold'>
-                          {idx === 0 && <span className='badge bg-warning text-dark'>🥇 #{idx + 1}</span>}
-                          {idx === 1 && <span className='badge bg-secondary'>🥈 #{idx + 1}</span>}
-                          {idx === 2 && <span className='badge bg-info text-dark'>🥉 #{idx + 1}</span>}
-                          {idx > 2 && <span className='text-primary fw-bold'>#{idx + 1}</span>}
+                          {idx === 0 && <span className='badge bg-warning-subtle text-warning border border-warning-subtle px-3 py-2 fw-extrabold' style={{ borderRadius: '10px' }}>🥇 #1</span>}
+                          {idx === 1 && <span className='badge bg-secondary-subtle text-secondary border border-secondary-subtle px-3 py-2 fw-extrabold' style={{ borderRadius: '10px' }}>🥈 #2</span>}
+                          {idx === 2 && <span className='badge bg-info-subtle text-info border border-info-subtle px-3 py-2 fw-extrabold' style={{ borderRadius: '10px' }}>🥉 #3</span>}
+                          {idx > 2 && <span className='text-muted fw-bold ps-2'>#{idx + 1}</span>}
                         </td>
                         <td className='fw-bold'>
                           <div className='d-flex align-items-center'>

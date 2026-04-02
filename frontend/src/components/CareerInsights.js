@@ -8,6 +8,8 @@ export default function CareerInsights() {
   const [analysis, setAnalysis] = useState(null);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
+  const [aiAdvice, setAiAdvice] = useState('');
+  const [aiLoading, setAiLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -42,6 +44,28 @@ export default function CareerInsights() {
     window.location.href = '/login';
   }
 
+  const handleGetAIAdvice = async () => {
+    setAiLoading(true);
+    setAiAdvice('');
+    try {
+      const payload = {
+        skills: profile.skills.map(s => typeof s === 'string' ? { name: s, level: 50 } : s),
+        recommendedRole: analysis.recommendedRole,
+        matchPercentage: analysis.matchPercentage,
+        missingSkills: analysis.missingSkills || []
+      };
+
+      const { data } = await API.post('/api/ai/advice', payload);
+      setAiAdvice(data.advice);
+    } catch (err) {
+      console.error('Error fetching AI advice:', err);
+      const errorMsg = err.response?.data?.details || err.response?.data?.error || 'Service temporarily unavailable. Please try again later.';
+      setAiAdvice(`Error: ${errorMsg}`);
+    } finally {
+      setAiLoading(false);
+    }
+  };
+
   if (loading) return <div className='d-flex justify-content-center align-items-center min-vh-100 bg-page-gradient text-white'><h3>Loading Data...</h3></div>;
 
   return (
@@ -53,9 +77,9 @@ export default function CareerInsights() {
             <div className='card card-refined border-0 shadow-sm'>
               <div className='card-body px-4 py-3 d-flex justify-content-between align-items-center'>
                 <div className='d-flex align-items-center'>
-                  <h4 className='m-0 fw-bold me-4'><span className='text-gradient fw-extrabold' style={{ letterSpacing: '-0.02em' }}>TAS Portal</span></h4>
-                  <Link to='/' className='btn btn-outline-primary btn-sm me-2 fw-bold'>Dashboard</Link>
-                  <Link to='/career-insights' className='btn btn-primary btn-sm fw-bold'>Career Insights</Link>
+                  <h4 className='m-0 fw-bold me-4'><span className='text-gradient fw-extrabold' style={{ letterSpacing: '-0.02em' }}>Tech Talent</span></h4>
+                  <Link to='/' className='btn btn-outline-light btn-sm me-2 px-3 fw-bold text-dark border-secondary opacity-75'>Dashboard</Link>
+                  <Link to='/career-insights' className='btn btn-gradient btn-sm px-3 fw-bold shadow-sm'>Career Insights</Link>
                 </div>
                 <div className='d-flex align-items-center'>
                   <span className='text-muted small fw-bold me-4 d-none d-sm-inline'>{user?.email}</span>
@@ -71,14 +95,13 @@ export default function CareerInsights() {
             <div className='mb-4 d-flex justify-content-between align-items-center'>
               <h2 className='text-white fw-bold'>Talents & Recommendation</h2>
             </div>
-            
+
             {/* Detailed Skills Section */}
             <div className='row mb-4'>
               <div className='col-12'>
                 <div className='card card-refined border-0 shadow-sm'>
                   <div className='card-body p-4 p-md-5'>
                     <h5 className='fw-bold mb-4 d-flex align-items-center text-dark'>
-                      <span className='bg-primary-subtle text-primary px-3 py-2 rounded-3 me-3 small'><i className="bi bi-tools"></i></span>
                       Talents Summary
                     </h5>
                     {profile.skills && profile.skills.length > 0 ? (
@@ -109,7 +132,6 @@ export default function CareerInsights() {
                   <div className='card card-refined border-0 shadow-sm'>
                     <div className='card-body p-4 p-md-5'>
                       <h5 className='fw-bold mb-4 d-flex align-items-center text-dark'>
-                        <span className='bg-warning flex-shrink-0 bg-opacity-10 text-warning d-flex justify-content-center align-items-center rounded-3 me-3' style={{ width: '40px', height: '40px' }}><i className="bi bi-lightbulb-fill"></i></span>
                         Career Insights & Recommendation
                       </h5>
 
@@ -168,7 +190,7 @@ export default function CareerInsights() {
 
                       <div className='row g-4 mt-4'>
                         <div className='col-12'>
-                          <h2 className='fw-bold mb-4 text-center'>Roles that match your talents</h2>
+                          <h2 className='fw-bold mb-4 text-center'>Best-Fit Roles for You</h2>
                           {analysis.topRoles && analysis.topRoles.length > 0 && (
                             <div style={{ width: '100%', height: 300 }}>
                               <ResponsiveContainer>
@@ -185,7 +207,7 @@ export default function CareerInsights() {
                                     label={({ role, matchPercentage }) => `${role} (${matchPercentage}%)`}
                                   >
                                     {analysis.topRoles.map((entry, index) => {
-                                      const COLORS = ['#0d6efd', '#20c997', '#ffc107', '#fd7e14'];
+                                      const COLORS = ['#7c3aed', '#0ea5e9', '#f59e0b', '#64748b']; // Indigo, Sky, Amber, Slate
                                       return <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />;
                                     })}
                                   </Pie>
@@ -196,6 +218,44 @@ export default function CareerInsights() {
                             </div>
                           )}
                         </div>
+                      </div>
+
+                      {/* AI Career Advisor Section */}
+                      <div className='border-top pt-5 mt-4'>
+                        <div className='row align-items-center'>
+                          <div className='col-md-8'>
+                            <h5 className='fw-bold mb-2 d-flex align-items-center text-dark'>
+                              AI Career Advisor
+                            </h5>
+                            <p className='text-muted small mb-0'>Get personalized, AI-driven career guidance based on your unique skill set and compatible roles.</p>
+                          </div>
+                          <div className='col-md-4 text-md-end mt-3 mt-md-0'>
+                            <button 
+                              className='btn btn-gradient text-white fw-bold px-4 py-3 rounded-4 shadow-sm' 
+                              onClick={handleGetAIAdvice}
+                              disabled={aiLoading}
+                            >
+                              {aiLoading ? (
+                                <><span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span> Thinking...</>
+                              ) : (
+                                <><i className="bi bi-stars me-2"></i> Get AI Advice</>
+                              )}
+                            </button>
+                          </div>
+                        </div>
+
+                        {aiAdvice && (
+                          <div className='mt-4 p-4 rounded-4 border-Glow premium-ai-card'>
+                            <div className='d-flex align-items-start mb-2'>
+                              <div>
+                                <h6 className='fw-bold text-dark mb-1'>Expert Recommendation</h6>
+                                <p className='mb-0 text-secondary' style={{ lineHeight: '1.6', fontSize: '1rem', whiteSpace: 'pre-wrap' }}>
+                                  {aiAdvice}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        )}
                       </div>
 
                     </div>
@@ -226,7 +286,7 @@ export default function CareerInsights() {
         )}
 
         <div className='text-center mt-5 mb-4'>
-          <p className='text-white-50 small fw-bold'>TAS Portal © 2026</p>
+          <p className='text-white-50 small fw-bold'>Tech Talent © 2026</p>
         </div>
       </div>
     </div>

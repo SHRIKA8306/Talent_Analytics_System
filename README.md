@@ -1,4 +1,4 @@
-# 🎯 Talent Analytics System - Tech Stack
+# 🎯 Tech Talent - Tech Stack
 
 ## Tech Stack
 

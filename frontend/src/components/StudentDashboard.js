@@ -54,9 +54,9 @@ export default function StudentDashboard() {
             <div className='card card-refined border-0 shadow-sm'>
               <div className='card-body px-4 py-3 d-flex justify-content-between align-items-center'>
                 <div className='d-flex align-items-center'>
-                  <h4 className='m-0 fw-bold me-4'><span className='text-gradient fw-extrabold' style={{ letterSpacing: '-0.02em' }}>Tech</span></h4>
-                  <Link to='/' className='btn btn-primary btn-sm me-2 fw-bold'>Dashboard</Link>
-                  <Link to='/career-insights' className='btn btn-outline-primary btn-sm fw-bold'>Career Insights</Link>
+                  <h4 className='m-0 fw-bold me-4'><span className='text-gradient fw-extrabold' style={{ letterSpacing: '-0.02em' }}>Tech Talent</span></h4>
+                  <Link to='/' className='btn btn-gradient btn-sm me-2 px-3 fw-bold shadow-sm'>Dashboard</Link>
+                  <Link to='/career-insights' className='btn btn-outline-light btn-sm px-3 fw-bold text-dark border-secondary opacity-75'>Career Insights</Link>
                 </div>
                 <div className='d-flex align-items-center'>
                   <span className='text-muted small fw-bold me-4 d-none d-sm-inline'>{user?.email}</span>
@@ -72,9 +72,6 @@ export default function StudentDashboard() {
           <div className='col-12'>
             <div className='card border-0 rounded-5 shadow-lg overflow-hidden' style={{ background: 'linear-gradient(135deg, #7c3aed 0%, #db2777 100%)' }}>
               <div className='card-body p-4 p-md-4 text-white position-relative'>
-                <div className='position-absolute top-0 end-0 p-4 d-none d-lg-block opacity-10' style={{ zIndex: 0 }}>
-                  <i className="bi bi-rocket-takeoff" style={{ fontSize: '7rem' }}></i>
-                </div>
                 <div className='row align-items-center position-relative' style={{ zIndex: 1 }}>
                   <div className='col-auto mb-2 mb-md-0'>
                     {profile?.profilePic ? (
@@ -90,7 +87,7 @@ export default function StudentDashboard() {
                     <p className='mb-0 opacity-90 fw-medium small'>Keep building your skills and projects to improve your rank.</p>
                   </div>
                   <div className='col-md-auto mt-3 mt-md-0'>
-                    <Link to="/profile" className='btn btn-light btn-md px-4 py-2 fw-bold text-primary shadow hover-up' style={{ borderRadius: '10px', zIndex: 10, position: 'relative' }}>
+                    <Link to="/profile" className='btn btn-light btn-md px-4 py-2 fw-bold text-primary shadow hover-up' style={{ borderRadius: '12px', zIndex: 10, position: 'relative' }}>
                       Update Profile
                     </Link>
                   </div>
@@ -181,7 +178,7 @@ export default function StudentDashboard() {
         )}
 
         <div className='text-center mt-5 mb-4'>
-          <p className='text-white-50 small fw-bold'>TAS Portal © 2026</p>
+          <p className='text-white-50 small fw-bold'>Tech Talent © 2026</p>
         </div>
       </div>
     </div>

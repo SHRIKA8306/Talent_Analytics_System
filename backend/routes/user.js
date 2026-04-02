@@ -39,18 +39,4 @@ res.status(201).send({
 });
 })
 
-// GET /api/users/all - Get all students (admin only)
-router.get('/all', auth, async (req, res) => {
-    try {
-        if (req.user.role !== 'admin') {
-            return res.status(403).send('Only admins can view all students');
-        }
-        
-        const students = await User.find({ role: 'student' }).select('-passwordHash').populate('profile');
-        res.send(students);
-    } catch (err) {
-        res.status(500).send(err.message);
-    }
-});
-
 module.exports=router;

@@ -33,11 +33,7 @@ export default function SkillAnalytics() {
     );
   }
 
-  const getBarColor = (level) => {
-    if (level > 70) return '#10b981'; // Success Green
-    if (level > 40) return '#f59e0b'; // Warning Yellow
-    return '#ef4444'; // Danger Red
-  };
+  const chartBarColor = '#7c3aed'; // Modern Indigo/Purple to match the background theme
 
   const getInsightMessage = () => {
     if (!analytics || !analytics.strongestSkill || !analytics.weakestSkill) return '';
@@ -107,11 +103,7 @@ export default function SkillAnalytics() {
                 cursor={{ fill: '#f8fafc' }}
                 contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
               />
-              <Bar dataKey="level" radius={[6, 6, 0, 0]} barSize={40}>
-                {analytics.skills.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={getBarColor(entry.level)} />
-                ))}
-              </Bar>
+              <Bar dataKey="level" radius={[6, 6, 0, 0]} barSize={40} fill={chartBarColor} />
             </BarChart>
           </ResponsiveContainer>
         </div>

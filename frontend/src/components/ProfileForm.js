@@ -158,65 +158,83 @@ export default function ProfileForm() {
                     />
                   </div>
 
-                  <div className='mb-3'>
-                    <label className='form-label fw-bold'>Skills</label>
-                    <div className='input-group mb-2'>
-                      <input
-                        type='text'
-                        className='form-control'
-                        placeholder='Add a skill'
-                        value={newSkill}
-                        onChange={(e) => setNewSkill(e.target.value)}
-                        onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddSkill())}
-                      />
-                      <button
-                        type='button'
-                        className='btn btn-outline-primary'
-                        onClick={handleAddSkill}
-                      >
-                        Add
-                      </button>
+                  <div className='mb-4'>
+                    <label className='form-label fw-bold text-secondary small text-uppercase spacing-wide'>Technical Talents & Proficiency</label>
+                    <div className='bg-light p-4 rounded-4 border-Glow mb-4'>
+                      <div className='row g-3 align-items-end'>
+                        <div className='col-md-7'>
+                          <label className='form-label small fw-bold text-muted mb-1'>TALENT NAME</label>
+                          <input
+                            type='text'
+                            className='form-control form-control-refined'
+                            placeholder='e.g. React, Node.js, Python'
+                            value={newSkill}
+                            onChange={(e) => setNewSkill(e.target.value)}
+                            onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddSkill())}
+                          />
+                        </div>
+                        <div className='col-md-5'>
+                          <button
+                            type='button'
+                            className='btn btn-gradient w-100 py-3 shadow-sm'
+                            onClick={handleAddSkill}
+                            style={{ borderRadius: '12px' }}
+                          >
+                            <i className="bi bi-plus-lg me-2"></i> Add Talent
+                          </button>
+                        </div>
+                      </div>
                     </div>
-                    <div className='mt-3'>
+
+                    <div className='mt-4'>
                       {formData.skills.map((skill, idx) => (
-                        <div key={idx} className='mb-3 p-3 bg-light rounded border-start border-primary border-4'>
-                          <div className='d-flex justify-content-between align-items-center mb-2'>
-                            <span className='fw-bold text-dark'>{skill.name}</span>
+                        <div key={idx} className='mb-3 card-talent p-4'>
+                          <div className='d-flex justify-content-between align-items-center mb-3'>
+                            <div>
+                                <span className='fw-extrabold text-dark fs-5'>{skill.name}</span>
+                                <div className='text-muted small mt-1'>Proficiency Level</div>
+                            </div>
                             <div className='d-flex align-items-center'>
-                                <span className={`badge ${skill.level > 70 ? 'bg-success' : skill.level > 40 ? 'bg-warning text-dark' : 'bg-danger'} me-2`}>
+                                <span className={`badge-proficiency ${skill.level > 75 ? 'bg-success text-white' : skill.level > 40 ? 'bg-indigo-subtle text-indigo' : 'bg-danger-subtle text-danger'} me-3`}>
                                     {skill.level}%
                                 </span>
                                 <button
                                     type='button'
-                                    className='btn btn-sm btn-outline-danger border-0'
+                                    className='btn btn-sm btn-outline-danger border-0 rounded-circle p-2'
                                     onClick={() => handleRemoveSkill(skill.name)}
+                                    style={{ width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                                 >
-                                    <i className="bi bi-trash"></i>
+                                    <i className="bi bi-trash3-fill"></i>
                                 </button>
                             </div>
                           </div>
-                          <input
-                            type='range'
-                            className='form-range custom-range'
-                            min='0'
-                            max='100'
-                            value={skill.level}
-                            onChange={(e) => handleLevelChange(idx, e.target.value)}
-                          />
-                          <div className='d-flex justify-content-between small text-muted mt-1'>
-                            <span>Beginner</span>
-                            <span>Expert</span>
+                          <div className='px-1'>
+                            <input
+                                type='range'
+                                className='form-range custom-range'
+                                min='0'
+                                max='100'
+                                value={skill.level}
+                                onChange={(e) => handleLevelChange(idx, e.target.value)}
+                            />
+                            <div className='d-flex justify-content-between small text-muted mt-2 fw-bold'>
+                                <span>BEGINNER</span>
+                                <span>EXPERT</span>
+                            </div>
                           </div>
                         </div>
                       ))}
                       {formData.skills.length === 0 && (
-                          <p className='text-center text-muted small py-3 border rounded border-dashed'>No skills added yet.</p>
+                          <div className='text-center py-5 border rounded-4 border-dashed bg-white'>
+                            <i className="bi bi-layers text-muted fs-1 mb-3 d-block"></i>
+                            <p className='text-muted mb-0'>No talents added yet. Start by adding your top skills!</p>
+                          </div>
                       )}
                     </div>
                   </div>
 
-                  <button type='submit' className='btn btn-gradient w-100 fw-bold'>
-                    Save Profile
+                  <button type='submit' className='btn btn-gradient w-100 py-3 fs-5 shadow mt-4' style={{ borderRadius: '15px' }}>
+                    Save Profile Information
                   </button>
                 </form>
               </div>

@@ -3,7 +3,6 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import API from "../api";
 
 export default function Login() {
-    const [loginType, setLoginType] = useState('student'); // 'student' or 'admin'
     const[data,setData]=useState({
         username:'',
         password:''
@@ -14,7 +13,6 @@ export default function Login() {
     const location = useLocation();
 
     useEffect(() => {
-        // Check for token in URL parameters (redirect from Google Auth)
         const queryParams = new URLSearchParams(location.search);
         const token = queryParams.get('token');
         if (token) {
@@ -30,31 +28,11 @@ export default function Login() {
         e.preventDefault();
         setError('')
         try{
-            if (loginType === 'admin') {
-                // For admin, check hardcoded credentials
-                if (data.username === 'admin' && data.password === 'admin123') {
-                    // Simulate admin login - create a token or just navigate
-                    localStorage.setItem('token', 'admin-token');
-                    localStorage.setItem('role', 'admin');
-                    localStorage.setItem('username', 'admin');
-                    navigate('/admin');
-                    return;
-                } else {
-                    setError('Invalid admin credentials');
-                    return;
-                }
-            }
-
-            // For student login, use the API
             const{data:res}= await API.post('/api/auth', data)
             localStorage.setItem('token',res.token);
             localStorage.setItem('role', res.role);
             localStorage.setItem('username', res.username);
-            if (res.role === 'admin') {
-                navigate('/admin');
-            } else {
-                navigate('/');
-            }
+            navigate('/');
         }
         catch(err){
                console.error('Login error:', err);
@@ -79,26 +57,9 @@ export default function Login() {
                 <div className='col-12 col-sm-10 col-md-8 col-lg-7 col-xl-5'>
                     <div className='card card-refined p-4'>
                         <div className='card-body p-0'>
-                            <h2 className='mb-1 text-center'><span className='text-gradient fw-extrabold pb-1' style={{ fontSize: '2rem', letterSpacing: '-0.02em' }}>TAS Portal</span></h2>
+                            <h2 className='mb-1 text-center'><span className='text-gradient fw-extrabold pb-1' style={{ fontSize: '2rem', letterSpacing: '-0.02em' }}>Tech Talent</span></h2>
                             <p className='text-center text-muted small fw-medium mb-4'>Secure Access to Talent Analytics</p>
                             
-                            <div className='login-toggle-container'>
-                                <button 
-                                    type='button' 
-                                    className={`login-toggle-btn ${loginType === 'student' ? 'active' : ''}`}
-                                    onClick={() => setLoginType('student')}
-                                >
-                                    Student
-                                </button>
-                                <button 
-                                    type='button' 
-                                    className={`login-toggle-btn ${loginType === 'admin' ? 'active' : ''}`}
-                                    onClick={() => setLoginType('admin')}
-                                >
-                                    Admin
-                                </button>
-                            </div>
-
                             {error&&<div className='alert alert-danger py-2 mb-4 small fw-bold border-0' style={{ backgroundColor: '#fef2f2', color: '#991b1b', borderRadius: '10px' }}>{error}</div>}
                             
                             <form onSubmit={handleSubmit}>
@@ -119,7 +80,9 @@ export default function Login() {
                                        </button>
                                      </div>
                                 </div>
-                                <button type='submit' className='btn btn-gradient w-100 fw-bold py-2 mb-3' style={{ borderRadius: '12px', fontSize: '1rem', letterSpacing: '0.01em' }}>Login securely</button>
+                                <button type="submit" className="btn btn-gradient w-100 fw-bold py-3 mb-4 mt-2 shadow-sm" style={{ borderRadius: '14px', fontSize: '1rem', letterSpacing: '0.01em' }}>
+                                    Login
+                                </button>
                             </form>
 
                             <div className='or-separator'>OR</div>

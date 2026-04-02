@@ -22,17 +22,11 @@ export default function Signup() {
         e.preventDefault();
         setError('')
         try{
-            const signupData = { ...data, role: 'student' };
-            const{data:res}= await API.post('/api/users/register', signupData)
+            const{data:res}= await API.post('/api/users/register', { ...data, role: 'student' })
             localStorage.setItem('token',res.token);
             localStorage.setItem('role',res.role);
             localStorage.setItem('username',res.username);
-            // Route based on role
-            if(res.role === 'admin'){
-                navigate('/admin')
-            } else {
-                navigate('/')
-            }
+            navigate('/')
         }
         catch(err){
                console.error('Signup error:', err);
@@ -55,7 +49,7 @@ export default function Signup() {
                 <div className='col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4'>
                     <div className='card card-refined p-4 p-md-5'>
                         <div className='card-body p-0'>
-                            <h2 className='mb-2 text-center'><span className='text-gradient fw-extrabold pb-1' style={{ fontSize: '2.2rem', letterSpacing: '-0.02em' }}>TAS Portal</span></h2>
+                            <h2 className='mb-2 text-center'><span className='text-gradient fw-extrabold pb-1' style={{ fontSize: '2.2rem', letterSpacing: '-0.02em' }}>Tech Talent</span></h2>
                             <p className='text-center text-muted small fw-medium mb-5'>Create your Talent Profile</p>
                             
                             {error&&<div className='alert alert-danger py-2 mb-4 small fw-bold border-0' style={{ backgroundColor: '#fef2f2', color: '#991b1b', borderRadius: '10px' }}>{error}</div>}

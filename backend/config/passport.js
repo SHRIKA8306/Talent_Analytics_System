@@ -2,11 +2,22 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const { User } = require('../model/user');
 
-// ────── GOOGLE OAUTH (SINGLE SETUP FOR BOTH STUDENT AND ADMIN) ──────
+// ────── ENV VAR CHECK ──────
+const clientID = process.env.GOOGLE_CLIENT_ID;
+const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
+const callbackURL = process.env.GOOGLE_REDIRECT_URL;
+
+if (!clientID || clientID === 'YOUR_GOOGLE_CLIENT_ID') {
+  console.error('❌ GOOGLE_CLIENT_ID is missing or invalid in .env file!');
+} else {
+  console.log('✅ Google OAuth Client ID loaded:', clientID.substring(0, 20) + '...');
+}
+
+// ────── GOOGLE OAUTH STRATEGY ──────
 passport.use(new GoogleStrategy({
-    clientID: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:4000/api/auth/google/callback"
+    clientID,
+    clientSecret,
+    callbackURL
   },
   async (accessToken, refreshToken, profile, done) => {
     try {
@@ -31,8 +42,15 @@ passport.use(new GoogleStrategy({
   }
 ));
 
-// ────── SERIALIZATION ──────
-passport.serializeUser((user, done) => done(null, user));
-passport.deserializeUser((user, done) => done(null, user));
+// ────── SERIALIZATION (store only user ID in session) ──────
+passport.serializeUser((user, done) => done(null, user._id));
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await User.findById(id);
+    done(null, user);
+  } catch (err) {
+    done(err, null);
+  }
+});
 
 module.exports = passport;
