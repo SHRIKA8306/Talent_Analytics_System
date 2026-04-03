@@ -220,7 +220,7 @@ export default function ProfileForm() {
                               {/* Progress Slider Container */}
                               <div className='mt-1 position-relative' style={{ height: '4px' }}>
                                 <div className='progress w-100 position-absolute top-50 translate-middle-y rounded-pill' style={{ height: '4px', backgroundColor: 'rgba(124, 58, 237, 0.1)' }}>
-                                  <div className='progress-bar rounded-pill' style={{ width: `${skill.level}%`, backgroundColor: '#7c3aed' }}></div>
+                                  <div className='progress-bar rounded-pill' style={{ width: `${skill.level}%`, background: 'linear-gradient(to right, #7B2FBE, #5B0E91)' }}></div>
                                 </div>
                                 {/* Invisible range input over the top for interactivity */}
                                 <input

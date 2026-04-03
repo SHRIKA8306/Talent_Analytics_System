@@ -149,7 +149,7 @@ export default function CareerInsights() {
                               <h4 className='fw-bold mb-0 text-gradient'>{analysis.matchPercentage}%</h4>
                             </div>
                             <div className='progress bg-secondary bg-opacity-25 mb-2' style={{ height: '12px', borderRadius: '10px' }}>
-                              <div className='progress-bar progress-bar-striped progress-bar-animated' role='progressbar' style={{ width: `${analysis.matchPercentage}%`, background: 'linear-gradient(135deg, #7c3aed 0%, #db2777 100%)' }} aria-valuenow={analysis.matchPercentage} aria-valuemin="0" aria-valuemax="100"></div>
+                              <div className='progress-bar progress-bar-striped progress-bar-animated' role='progressbar' style={{ width: `${analysis.matchPercentage}%`, background: 'linear-gradient(135deg, #7B2FBE 0%, #5B0E91 100%)' }} aria-valuenow={analysis.matchPercentage} aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                           </div>
                         </div>
@@ -230,8 +230,8 @@ export default function CareerInsights() {
                             <p className='text-muted small mb-0'>Get personalized, AI-driven career guidance based on your unique skill set and compatible roles.</p>
                           </div>
                           <div className='col-md-4 text-md-end mt-3 mt-md-0'>
-                            <button 
-                              className='btn btn-gradient text-white fw-bold px-4 py-3 rounded-4 shadow-sm' 
+                            <button
+                              className='btn btn-gradient text-white fw-bold px-4 py-3 rounded-4 shadow-sm'
                               onClick={handleGetAIAdvice}
                               disabled={aiLoading}
                             >

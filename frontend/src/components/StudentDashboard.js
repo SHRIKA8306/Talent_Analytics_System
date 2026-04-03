@@ -71,7 +71,7 @@ export default function StudentDashboard() {
         {/* Hero Section */}
         <div className='row mb-4'>
           <div className='col-12'>
-            <div className='card border-0 rounded-5 shadow-lg overflow-hidden' style={{ background: 'linear-gradient(135deg, #7c3aed 0%, #db2777 100%)' }}>
+            <div className='card border-0 rounded-5 shadow-lg overflow-hidden' style={{ background: '#9055B5' }}>
               <div className='card-body p-4 p-md-4 text-white position-relative'>
                 <div className='row align-items-center position-relative' style={{ zIndex: 1 }}>
                   <div className='col-auto mb-2 mb-md-0'>
@@ -90,7 +90,7 @@ export default function StudentDashboard() {
                     )}
                   </div>
                   <div className='col'>
-                    <h1 className='fw-bold mb-1' style={{ fontSize: 'clamp(1.5rem, 3vw, 2.2rem)' }}>Welcome, {profile?.name || user?.username}! 👋</h1>
+                    <h1 className='fw-bold mb-1' style={{ fontSize: 'clamp(1.5rem, 3vw, 2.2rem)' }}>Welcome, {profile?.name || user?.username}! </h1>
                     <p className='mb-0 opacity-90 fw-medium small'>Keep building your skills and projects to improve your rank.</p>
                   </div>
                   <div className='col-md-auto mt-3 mt-md-0'>
@@ -134,7 +134,7 @@ export default function StudentDashboard() {
                       <div
                         className="position-absolute text-white p-3 shadow-lg text-start"
                         style={{
-                          background: 'linear-gradient(135deg, #7c3aed 0%, #db2777 100%)',
+                          background: '#9055B5',
                           left: '100%',
                           marginLeft: '15px',
                           top: '50%',
@@ -181,7 +181,7 @@ export default function StudentDashboard() {
                         </div>
 
                         {/* Tooltip Arrow pointing left */}
-                        <div className="position-absolute" style={{ top: '50%', left: '-8px', transform: 'translateY(-50%)', width: '0', height: '0', borderTop: '8px solid transparent', borderBottom: '8px solid transparent', borderRight: '8px solid #7c3aed' }}></div>
+                        <div className="position-absolute" style={{ top: '50%', left: '-8px', transform: 'translateY(-50%)', width: '0', height: '0', borderTop: '8px solid transparent', borderBottom: '8px solid transparent', borderRight: '8px solid #9055B5' }}></div>
                       </div>
                     )}
                   </div>
