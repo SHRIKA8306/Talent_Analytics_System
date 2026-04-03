@@ -46,8 +46,8 @@ export default function Signup() {
         <div className='bg-page-gradient min-vh-100 d-flex align-items-center py-5'>
             <div className='container'>
                 <div className='row justify-content-center px-3'>
-                    <div className='col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4'>
-                        <div className='card card-refined p-4 p-md-5'>
+                    <div className='col-12 col-sm-10 col-md-8 col-lg-7 col-xl-5'>
+                        <div className='card card-refined p-4'>
                              <div className='card-body p-0'>
                                 <div className='text-center'>
                                     <img src="/favicon.png" alt="Logo" className="mb-3" style={{ width: '80px', height: '80px', objectFit: 'contain' }} />
