@@ -57,10 +57,12 @@ export default function Login() {
                 <div className='row justify-content-center px-3'>
                     <div className='col-12 col-sm-10 col-md-8 col-lg-7 col-xl-5'>
                         <div className='card card-refined p-4'>
-                            <div className='card-body p-0 text-center'>
-                                <img src="/favicon.png" alt="Logo" className="mb-3" style={{ width: '80px', height: '80px', objectFit: 'contain' }} />
-                                <h2 className='mb-1 text-center'><span className='text-gradient fw-extrabold pb-1' style={{ fontSize: '2rem', letterSpacing: '-0.02em' }}>Tech Talentify</span></h2>
-                                <p className='text-center text-muted small fw-medium mb-4'>Secure Access to Talent Analytics</p>
+                             <div className='card-body p-0'>
+                                <div className='text-center'>
+                                    <img src="/favicon.png" alt="Logo" className="mb-3" style={{ width: '80px', height: '80px', objectFit: 'contain' }} />
+                                    <h2 className='mb-1'><span className='text-gradient fw-extrabold pb-1' style={{ fontSize: '2rem', letterSpacing: '-0.02em' }}>Tech Talentify</span></h2>
+                                    <p className='text-muted small fw-medium mb-4'>Secure Access to Talent Analytics</p>
+                                </div>
 
                                 {error && <div className='alert alert-danger py-2 mb-4 small fw-bold border-0' style={{ backgroundColor: '#fef2f2', color: '#991b1b', borderRadius: '10px' }}>{error}</div>}
 
