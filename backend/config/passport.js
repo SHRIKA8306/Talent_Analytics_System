@@ -17,7 +17,8 @@ if (!clientID || clientID === 'YOUR_GOOGLE_CLIENT_ID') {
 passport.use(new GoogleStrategy({
     clientID,
     clientSecret,
-    callbackURL
+    callbackURL,
+    proxy: true
   },
   async (accessToken, refreshToken, profile, done) => {
     try {
