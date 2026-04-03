@@ -48,8 +48,9 @@ export default function Signup() {
                 <div className='row justify-content-center px-3'>
                     <div className='col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4'>
                         <div className='card card-refined p-4 p-md-5'>
-                            <div className='card-body p-0'>
-                                <h2 className='mb-2 text-center'><span className='text-gradient fw-extrabold pb-1' style={{ fontSize: '2.2rem', letterSpacing: '-0.02em' }}>Tech Talent</span></h2>
+                            <div className='card-body p-0 text-center'>
+                                <img src="/favicon.png" alt="Logo" className="mb-3" style={{ width: '80px', height: '80px', objectFit: 'contain' }} />
+                                <h2 className='mb-2 text-center'><span className='text-gradient fw-extrabold pb-1' style={{ fontSize: '2.2rem', letterSpacing: '-0.02em' }}>Tech Talentify</span></h2>
                                 <p className='text-center text-muted small fw-medium mb-5'>Create your Talent Profile</p>
 
                                 {error && <div className='alert alert-danger py-2 mb-4 small fw-bold border-0' style={{ backgroundColor: '#fef2f2', color: '#991b1b', borderRadius: '10px' }}>{error}</div>}

@@ -5,7 +5,6 @@ import SkillAnalytics from './SkillAnalytics';
 
 export default function StudentDashboard() {
   const [profile, setProfile] = useState(null);
-  const [insights, setInsights] = useState(null);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
   const [isImageEnlarged, setIsImageEnlarged] = useState(false);
@@ -23,10 +22,7 @@ export default function StudentDashboard() {
       try {
         const { data: dashboardData } = await API.get('/api/student/dashboard');
         const { data: rankData } = await API.get('/api/student/rank');
-        const { data: insightsData } = await API.get('/api/student/insights');
-
         setProfile({ ...dashboardData, rank: rankData.rank, totalStudents: rankData.totalStudents });
-        setInsights(insightsData);
       } catch (err) {
         console.log('Profile not found');
       }
@@ -55,7 +51,7 @@ export default function StudentDashboard() {
             <div className='card card-refined border-0 shadow-sm'>
               <div className='card-body px-4 py-3 d-flex justify-content-between align-items-center'>
                 <div className='d-flex align-items-center'>
-                  <h4 className='m-0 fw-bold me-4'><span className='text-gradient fw-extrabold' style={{ letterSpacing: '-0.02em' }}>Tech Talent</span></h4>
+                  <h4 className='m-0 fw-bold me-4'><span className='text-gradient fw-extrabold' style={{ letterSpacing: '-0.02em' }}>Tech Talentify</span></h4>
                   <Link to='/' className='btn btn-gradient btn-sm me-2 px-3 fw-bold shadow-sm'>Dashboard</Link>
                   <Link to='/career-insights' className='btn btn-outline-light btn-sm px-3 fw-bold text-dark border-secondary opacity-75'>Career Insights</Link>
                 </div>
@@ -257,7 +253,7 @@ export default function StudentDashboard() {
         )}
 
         <div className='text-center mt-5 mb-4'>
-          <p className='text-white-50 small fw-bold'>Tech Talent © 2026</p>
+          <p className='text-white-50 small fw-bold'>Tech Talentify © 2026</p>
         </div>
       </div>
 

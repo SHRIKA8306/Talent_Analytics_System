@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { PieChart, Pie, Tooltip, ResponsiveContainer, Cell, Legend } from 'recharts';
 import API from '../api'
 
@@ -10,7 +10,6 @@ export default function CareerInsights() {
   const [user, setUser] = useState(null);
   const [aiAdvice, setAiAdvice] = useState('');
   const [aiLoading, setAiLoading] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     fetchData();
@@ -77,7 +76,7 @@ export default function CareerInsights() {
             <div className='card card-refined border-0 shadow-sm'>
               <div className='card-body px-4 py-3 d-flex justify-content-between align-items-center'>
                 <div className='d-flex align-items-center'>
-                  <h4 className='m-0 fw-bold me-4'><span className='text-gradient fw-extrabold' style={{ letterSpacing: '-0.02em' }}>Tech Talent</span></h4>
+                  <h4 className='m-0 fw-bold me-4'><span className='text-gradient fw-extrabold' style={{ letterSpacing: '-0.02em' }}>Tech Talentify</span></h4>
                   <Link to='/' className='btn btn-outline-light btn-sm me-2 px-3 fw-bold text-dark border-secondary opacity-75'>Dashboard</Link>
                   <Link to='/career-insights' className='btn btn-gradient btn-sm px-3 fw-bold shadow-sm'>Career Insights</Link>
                 </div>
@@ -286,7 +285,7 @@ export default function CareerInsights() {
         )}
 
         <div className='text-center mt-5 mb-4'>
-          <p className='text-white-50 small fw-bold'>Tech Talent © 2026</p>
+          <p className='text-white-50 small fw-bold'>Tech Talentify © 2026</p>
         </div>
       </div>
     </div>
