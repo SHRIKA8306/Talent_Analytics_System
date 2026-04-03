@@ -1,4 +1,7 @@
-# 🎯 Tech Talent - Tech Stack & Features
+# 🚀 Tech Talentify -Talent Analytics System  AI Career Insights 
+
+## 🚀 Live Demo
+**[🚀 Open Tech Talentify](https://techtalentify.netlify.app)**
 
 ## Tech Stack
 
