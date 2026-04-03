@@ -25,6 +25,11 @@ bcryptjs - Password hashing
 cors - Cross-origin requests
 dotenv - Environment variables
 nodemon - Auto-restart during development
+joi - Input validation
+passport - Authentication middleware
+passport-google-oauth20 - Google OAuth 2.0 strategy for Passport
+express-session - Session middleware for authentication
+@google/generative-ai - Google Gemini API SDK for AI Career Advisor
 
 =============================================================================
 FRONTEND DEPENDENCIES (React)
@@ -56,5 +61,8 @@ QUICK START COMMANDS
 5. Create .env in backend folder:
    MONGO_URI=mongodb://localhost:27017/talent-analytics
    JWT_SECRET=your-secret-key-here
+   GOOGLE_CLIENT_ID=your-google-oauth-client-id
+   GOOGLE_CLIENT_SECRET=your-google-oauth-client-secret
+   GOOGLE_GEMINI_API_KEY=your-gemini-api-key
 
-For detailed setup, see QUICKSTART.md and README.md
+

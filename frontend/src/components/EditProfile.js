@@ -268,34 +268,58 @@ export default function EditProfile() {
 
                     {/* Talent List */}
                     <div className='skill-list d-flex flex-column gap-2'>
-                      {formData.skills.map((skill, index) => (
-                        <div key={index} className='px-3 py-2 rounded-4 border bg-white shadow-sm transition-all hover-shadow'>
-                          <div className='d-flex justify-content-between align-items-center mb-1'>
-                            <span className='fw-bold text-dark small'>{skill.name}</span>
-                            <button 
-                              type='button' 
-                              className='btn btn-link text-danger p-0'
-                              onClick={() => handleRemoveSkill(index)}
-                            >
-                              <i className="bi bi-trash3-fill small"></i>
-                            </button>
-                          </div>
-                          <div className='d-flex align-items-center gap-2'>
-                            <input 
-                              type='range' 
-                              className='form-range custom-range flex-grow-1' 
-                              min='0' 
-                              max='100' 
-                              style={{ height: '1.2rem' }}
-                              value={skill.level}
-                              onChange={(e) => handleSkillLevelChange(index, e.target.value)}
-                            />
-                            <span className='badge bg-indigo-subtle text-indigo fw-bold' style={{ minWidth: '40px', fontSize: '0.75rem' }}>
-                              {skill.level}%
-                            </span>
+                      {formData.skills.map((skill, index) => {
+                        const levelText = skill.level > 75 ? 'Expert' : skill.level > 40 ? 'Intermediate' : 'Learning';
+                        const firstLetter = skill.name ? skill.name.charAt(0).toUpperCase() : 'S';
+                        
+                        return (
+                        <div key={index} className='card border-0 shadow-sm mb-2' style={{ borderRadius: '12px', backgroundColor: '#fff' }}>
+                          <div className='card-body p-2 px-3 d-flex align-items-center'>
+
+                            {/* Content */}
+                            <div className='flex-grow-1 d-flex flex-column justify-content-center'>
+                              <div className='d-flex justify-content-between align-items-center mb-1'>
+                                <div className='d-flex align-items-center gap-2'>
+                                  <h6 className='fw-bold mb-0 text-dark' style={{ fontSize: '0.85rem' }}>{skill.name}</h6>
+                                  <span className='badge rounded-pill fw-semibold' style={{ backgroundColor: 'rgba(124, 58, 237, 0.1)', color: '#7c3aed', fontSize: '0.6rem', padding: '0.25em 0.5em' }}>
+                                    {levelText}
+                                  </span>
+                                </div>
+                                <div className='d-flex align-items-center'>
+                                  <span className='fw-bold me-3' style={{ color: '#7c3aed', fontSize: '0.9rem' }}>{skill.level}%</span>
+                                  <button
+                                      type='button'
+                                      className='btn btn-sm d-flex align-items-center justify-content-center'
+                                      onClick={() => handleRemoveSkill(index)}
+                                      style={{ width: '28px', height: '28px', backgroundColor: 'rgba(124, 58, 237, 0.05)', color: '#7c3aed', border: '1px solid rgba(124, 58, 237, 0.2)', borderRadius: '6px' }}
+                                  >
+                                      <i className="bi bi-trash3" style={{ fontSize: '0.75rem' }}></i>
+                                  </button>
+                                </div>
+                              </div>
+
+                              {/* Progress Slider Container */}
+                              <div className='mt-1 position-relative' style={{ height: '4px' }}>
+                                <div className='progress w-100 position-absolute top-50 translate-middle-y rounded-pill' style={{ height: '4px', backgroundColor: 'rgba(124, 58, 237, 0.1)' }}>
+                                  <div className='progress-bar rounded-pill' style={{ width: `${skill.level}%`, backgroundColor: '#7c3aed' }}></div>
+                                </div>
+                                {/* Invisible range input over the top for interactivity */}
+                                <input
+                                    type='range'
+                                    className='form-range w-100 position-absolute top-50 translate-middle-y'
+                                    min='0'
+                                    max='100'
+                                    value={skill.level}
+                                    onChange={(e) => handleSkillLevelChange(index, e.target.value)}
+                                    style={{ opacity: 0, height: '100%', cursor: 'pointer', zIndex: 5 }}
+                                    title="Slide to adjust proficiency"
+                                />
+                              </div>
+                            </div>
+
                           </div>
                         </div>
-                      ))}
+                      )})}
                       {formData.skills.length === 0 && (
                         <div className='text-center py-4 bg-light rounded-4 border border-dashed'>
                           <p className='text-muted small mb-0 fw-medium'>No skills added yet. Use the form above to add your technical expertise.</p>

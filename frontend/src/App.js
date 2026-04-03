@@ -8,7 +8,6 @@ import Leaderboard from './components/Leaderboard';
 import CareerInsights from './components/CareerInsights';
 import { Navigate, Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
-import API from './api';
 
 // Handles Google OAuth redirect: saves token+role then goes to dashboard
 function GoogleCallback() {
@@ -26,12 +25,12 @@ function GoogleCallback() {
     navigate('/', { replace: true });
   }, []);
 
-  return <div style={{textAlign:'center',marginTop:'20vh',fontSize:'1.2rem'}}>Signing you in... ⏳</div>;
+  return <div style={{ textAlign: 'center', marginTop: '20vh', fontSize: '1.2rem' }}>Signing you in... ⏳</div>;
 }
 
-function PrivateRoute({children}){
-  const token=localStorage.getItem('token');
-  return token?children:<Navigate to='/login'/>
+function PrivateRoute({ children }) {
+  const token = localStorage.getItem('token');
+  return token ? children : <Navigate to='/login' />
 }
 
 function App() {
@@ -39,28 +38,28 @@ function App() {
     <Routes>
       <Route path='/' element={
         <PrivateRoute>
-          <StudentDashboard/>
+          <StudentDashboard />
         </PrivateRoute>
-      }/>
+      } />
       <Route path='/profile' element={
         <PrivateRoute>
-          <EditProfile/>
+          <EditProfile />
         </PrivateRoute>
-      }/>
+      } />
       <Route path='/leaderboard' element={
         <PrivateRoute>
-          <Leaderboard/>
+          <Leaderboard />
         </PrivateRoute>
-      }/>
+      } />
       <Route path='/career-insights' element={
         <PrivateRoute>
-          <CareerInsights/>
+          <CareerInsights />
         </PrivateRoute>
-      }/>
-      <Route path='/login' element={<Login/>}/>
-      <Route path='/signup' element={<Signup/>}/>
-      <Route path='/dashboard' element={<GoogleCallback/>}/>
-      <Route path='*' element={<Navigate to='/'replace/>}/>
+      } />
+      <Route path='/login' element={<Login />} />
+      <Route path='/signup' element={<Signup />} />
+      <Route path='/dashboard' element={<GoogleCallback />} />
+      <Route path='*' element={<Navigate to='/' replace />} />
     </Routes>
   );
 }

@@ -1,6 +1,39 @@
 import React, { useState, useEffect } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import API from '../api';
+
+const CircularProgress = ({ value, label, color, delay }) => {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    // Staggered animation
+    const timer = setTimeout(() => setProgress(value), delay * 150 + 100);
+    return () => clearTimeout(timer);
+  }, [value, delay]);
+
+  const radius = 35;
+  const circumference = 2 * Math.PI * radius;
+  const strokeDashoffset = circumference - (progress / 100) * circumference;
+
+  return (
+    <div className="d-flex flex-column align-items-center mb-4 mx-3">
+      <div className="position-relative shadow-sm rounded-circle d-flex align-items-center justify-content-center" style={{ width: '90px', height: '90px', background: '#fff' }}>
+        <svg width="90" height="90" viewBox="0 0 90 90" className="position-absolute top-0 start-0">
+          <circle cx="45" cy="45" r={radius} fill="none" stroke="#f1f5f9" strokeWidth="8" />
+          <circle
+            cx="45" cy="45" r={radius} fill="none" stroke={color}
+            strokeWidth="8" strokeDasharray={circumference} strokeDashoffset={strokeDashoffset}
+            strokeLinecap="round" transform="rotate(-90 45 45)"
+            style={{ transition: 'stroke-dashoffset 1.2s cubic-bezier(0.4, 0, 0.2, 1)' }}
+          />
+        </svg>
+        <div className="fw-bold" style={{ fontSize: '0.95rem', color: color }}>
+          {progress}
+        </div>
+      </div>
+      <span className="mt-3 fw-bold text-secondary text-capitalize" style={{ fontSize: '0.85rem' }}>{label}</span>
+    </div>
+  );
+};
 
 export default function SkillAnalytics() {
   const [analytics, setAnalytics] = useState(null);
@@ -83,29 +116,20 @@ export default function SkillAnalytics() {
           </div>
         </div>
 
-        <div style={{ width: '100%', height: 300 }}>
-          <ResponsiveContainer>
-            <BarChart data={analytics.skills}>
-              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-              <XAxis 
-                dataKey="name" 
-                axisLine={false} 
-                tickLine={false} 
-                tick={{ fill: '#64748b', fontSize: 12, fontWeight: 600 }}
+        <div className="d-flex flex-wrap justify-content-center pt-3 pb-2 bg-light rounded-4 border border-1 border-light">
+          {analytics.skills.map((skill, index) => {
+            const ringColors = ['#8b5cf6', '#f59e0b', '#ef4444', '#ec4899', '#3b82f6', '#14b8a6', '#84cc16', '#a855f7'];
+            const color = ringColors[index % ringColors.length];
+            return (
+              <CircularProgress 
+                key={index} 
+                value={skill.level} 
+                label={skill.name} 
+                color={color} 
+                delay={index} 
               />
-              <YAxis 
-                axisLine={false} 
-                tickLine={false} 
-                tick={{ fill: '#94a3b8', fontSize: 11 }}
-                domain={[0, 100]}
-              />
-              <Tooltip 
-                cursor={{ fill: '#f8fafc' }}
-                contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
-              />
-              <Bar dataKey="level" radius={[6, 6, 0, 0]} barSize={40} fill={chartBarColor} />
-            </BarChart>
-          </ResponsiveContainer>
+            );
+          })}
         </div>
 
         {analytics.weakSkills && analytics.weakSkills.length > 0 && (

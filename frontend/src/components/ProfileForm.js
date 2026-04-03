@@ -159,11 +159,11 @@ export default function ProfileForm() {
                   </div>
 
                   <div className='mb-4'>
-                    <label className='form-label fw-bold text-secondary small text-uppercase spacing-wide'>Technical Talents & Proficiency</label>
+                    <label className='form-label fw-bold text-secondary small text-uppercase spacing-wide'>Technical Talents</label>
                     <div className='bg-light p-4 rounded-4 border-Glow mb-4'>
                       <div className='row g-3 align-items-end'>
                         <div className='col-md-7'>
-                          <label className='form-label small fw-bold text-muted mb-1'>TALENT NAME</label>
+                          <label className='form-label small fw-bold text-muted mb-1'>TALENT</label>
                           <input
                             type='text'
                             className='form-control form-control-refined'
@@ -187,43 +187,58 @@ export default function ProfileForm() {
                     </div>
 
                     <div className='mt-4'>
-                      {formData.skills.map((skill, idx) => (
-                        <div key={idx} className='mb-3 card-talent p-4'>
-                          <div className='d-flex justify-content-between align-items-center mb-3'>
-                            <div>
-                                <span className='fw-extrabold text-dark fs-5'>{skill.name}</span>
-                                <div className='text-muted small mt-1'>Proficiency Level</div>
+                      {formData.skills.map((skill, idx) => {
+                        const levelText = skill.level > 75 ? 'Expert' : skill.level > 40 ? 'Intermediate' : 'Learning';
+                        const firstLetter = skill.name ? skill.name.charAt(0).toUpperCase() : 'S';
+                        
+                        return (
+                        <div key={idx} className='card border-0 shadow-sm mb-2' style={{ borderRadius: '12px', backgroundColor: '#fff' }}>
+                          <div className='card-body p-2 px-3 d-flex align-items-center'>
+
+                            {/* Content */}
+                            <div className='flex-grow-1 d-flex flex-column justify-content-center'>
+                              <div className='d-flex justify-content-between align-items-center mb-1'>
+                                <div className='d-flex align-items-center gap-2'>
+                                  <h6 className='fw-bold mb-0 text-dark' style={{ fontSize: '0.85rem' }}>{skill.name}</h6>
+                                  <span className='badge rounded-pill fw-semibold' style={{ backgroundColor: 'rgba(124, 58, 237, 0.1)', color: '#7c3aed', fontSize: '0.6rem', padding: '0.25em 0.5em' }}>
+                                    {levelText}
+                                  </span>
+                                </div>
+                                <div className='d-flex align-items-center'>
+                                  <span className='fw-bold me-3' style={{ color: '#7c3aed', fontSize: '0.9rem' }}>{skill.level}%</span>
+                                  <button
+                                      type='button'
+                                      className='btn btn-sm d-flex align-items-center justify-content-center'
+                                      onClick={() => handleRemoveSkill(skill.name)}
+                                      style={{ width: '28px', height: '28px', backgroundColor: 'rgba(124, 58, 237, 0.05)', color: '#7c3aed', border: '1px solid rgba(124, 58, 237, 0.2)', borderRadius: '6px' }}
+                                  >
+                                      <i className="bi bi-trash3" style={{ fontSize: '0.75rem' }}></i>
+                                  </button>
+                                </div>
+                              </div>
+
+                              {/* Progress Slider Container */}
+                              <div className='mt-1 position-relative' style={{ height: '4px' }}>
+                                <div className='progress w-100 position-absolute top-50 translate-middle-y rounded-pill' style={{ height: '4px', backgroundColor: 'rgba(124, 58, 237, 0.1)' }}>
+                                  <div className='progress-bar rounded-pill' style={{ width: `${skill.level}%`, backgroundColor: '#7c3aed' }}></div>
+                                </div>
+                                {/* Invisible range input over the top for interactivity */}
+                                <input
+                                    type='range'
+                                    className='form-range w-100 position-absolute top-50 translate-middle-y'
+                                    min='0'
+                                    max='100'
+                                    value={skill.level}
+                                    onChange={(e) => handleLevelChange(idx, e.target.value)}
+                                    style={{ opacity: 0, height: '100%', cursor: 'pointer', zIndex: 5 }}
+                                    title="Slide to adjust proficiency"
+                                />
+                              </div>
                             </div>
-                            <div className='d-flex align-items-center'>
-                                <span className={`badge-proficiency ${skill.level > 75 ? 'bg-success text-white' : skill.level > 40 ? 'bg-indigo-subtle text-indigo' : 'bg-danger-subtle text-danger'} me-3`}>
-                                    {skill.level}%
-                                </span>
-                                <button
-                                    type='button'
-                                    className='btn btn-sm btn-outline-danger border-0 rounded-circle p-2'
-                                    onClick={() => handleRemoveSkill(skill.name)}
-                                    style={{ width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-                                >
-                                    <i className="bi bi-trash3-fill"></i>
-                                </button>
-                            </div>
-                          </div>
-                          <div className='px-1'>
-                            <input
-                                type='range'
-                                className='form-range custom-range'
-                                min='0'
-                                max='100'
-                                value={skill.level}
-                                onChange={(e) => handleLevelChange(idx, e.target.value)}
-                            />
-                            <div className='d-flex justify-content-between small text-muted mt-2 fw-bold'>
-                                <span>BEGINNER</span>
-                                <span>EXPERT</span>
-                            </div>
+
                           </div>
                         </div>
-                      ))}
+                      )})}
                       {formData.skills.length === 0 && (
                           <div className='text-center py-5 border rounded-4 border-dashed bg-white'>
                             <i className="bi bi-layers text-muted fs-1 mb-3 d-block"></i>

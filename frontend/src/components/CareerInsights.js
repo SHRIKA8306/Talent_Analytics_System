@@ -139,17 +139,17 @@ export default function CareerInsights() {
                         <div className='col-md-6'>
                           <div className='p-4 h-100 bg-light rounded-4 border'>
                             <p className='text-muted small fw-bold mb-1 text-uppercase'>Recommended Role</p>
-                            <h3 className='fw-bold text-primary mb-0'>{analysis.recommendedRole}</h3>
+                            <h3 className='fw-bold text-gradient mb-0'>{analysis.recommendedRole}</h3>
                           </div>
                         </div>
                         <div className='col-md-6'>
                           <div className='p-4 h-100 bg-light rounded-4 border d-flex flex-column justify-content-center'>
                             <div className='d-flex justify-content-between align-items-center mb-2'>
                               <p className='text-muted small fw-bold mb-0 text-uppercase'>Role Compatibility Match</p>
-                              <h4 className='fw-bold mb-0 text-success'>{analysis.matchPercentage}%</h4>
+                              <h4 className='fw-bold mb-0 text-gradient'>{analysis.matchPercentage}%</h4>
                             </div>
                             <div className='progress bg-secondary bg-opacity-25 mb-2' style={{ height: '12px', borderRadius: '10px' }}>
-                              <div className='progress-bar bg-success progress-bar-striped progress-bar-animated' role='progressbar' style={{ width: `${analysis.matchPercentage}%` }} aria-valuenow={analysis.matchPercentage} aria-valuemin="0" aria-valuemax="100"></div>
+                              <div className='progress-bar progress-bar-striped progress-bar-animated' role='progressbar' style={{ width: `${analysis.matchPercentage}%`, background: 'linear-gradient(135deg, #7c3aed 0%, #db2777 100%)' }} aria-valuenow={analysis.matchPercentage} aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                           </div>
                         </div>
@@ -207,7 +207,7 @@ export default function CareerInsights() {
                                     label={({ role, matchPercentage }) => `${role} (${matchPercentage}%)`}
                                   >
                                     {analysis.topRoles.map((entry, index) => {
-                                      const COLORS = ['#7c3aed', '#0ea5e9', '#f59e0b', '#64748b']; // Indigo, Sky, Amber, Slate
+                                      const COLORS = ['#8b5cf6', '#f59e0b', '#ef4444', '#ec4899', '#3b82f6']; // Purple, Orange, Red, Pink, Blue
                                       return <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />;
                                     })}
                                   </Pie>
