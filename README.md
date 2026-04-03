@@ -1,4 +1,4 @@
-# Tech Talentify -Talent Analytics System  
+# Tech Talentify -Talent Analytics System & AI advisor
 
 ## Live Demo
 **[Tech Talentify](https://techtalentify.netlify.app)**
