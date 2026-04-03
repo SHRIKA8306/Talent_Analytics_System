@@ -1,7 +1,7 @@
 # Tech Talentify -Talent Analytics System  
 
 ## Live Demo
-**[ Tech Talentify](https://techtalentify.netlify.app)**
+**[Tech Talentify](https://techtalentify.netlify.app)**
 URL - https://techtalentify.netlify.app
 
 ## Tech Stack
