@@ -1,7 +1,8 @@
-# 🚀 Tech Talentify -Talent Analytics System  AI Career Insights 
+# Tech Talentify -Talent Analytics System  
 
-## 🚀 Live Demo
-**[🚀 Open Tech Talentify](https://techtalentify.netlify.app)**
+## Live Demo
+**[ Open Tech Talentify](https://techtalentify.netlify.app)**
+URL - https://techtalentify.netlify.app
 
 ## Tech Stack
 
