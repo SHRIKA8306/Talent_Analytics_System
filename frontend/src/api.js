@@ -1,7 +1,7 @@
 //in this only we connect frontend and backend
 import axios from "axios";
 const API = axios.create({
-    baseURL: process.env.REACT_APP_API_URL || 'http://localhost:4000'
+    baseURL: process.env.REACT_APP_API_URL || 'https://tech-talent.onrender.com'
 })
 //attach jwt token
 API.interceptors.request.use((config) => {

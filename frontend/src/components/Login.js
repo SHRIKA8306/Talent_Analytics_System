@@ -48,7 +48,7 @@ export default function Login() {
     }
 
     const handleGoogleLogin = () => {
-        const baseUrl = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+        const baseUrl = process.env.REACT_APP_API_URL || 'https://tech-talent.onrender.com';
         window.location.href = `${baseUrl}/api/auth/google`;
     };
     return (

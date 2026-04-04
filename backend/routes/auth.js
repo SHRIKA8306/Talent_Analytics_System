@@ -52,9 +52,9 @@ router.get('/google/callback',
           process.env.JWT_SECRET || "shri@march",
           { expiresIn: process.env.JWT_EXPRIRES_IN || '7d' }
       );
-      res.redirect(`http://localhost:3000/dashboard?token=${token}&role=${updatedUser.role}`);
+      res.redirect(`https://techtalentify.netlify.app/dashboard?token=${token}&role=${updatedUser.role}`);
     }).catch(err => {
-      res.redirect(`http://localhost:3000/login?error=Failed to set role`);
+      res.redirect(`https://techtalentify.netlify.app/login?error=Failed to set role`);
     });
   }
 );
