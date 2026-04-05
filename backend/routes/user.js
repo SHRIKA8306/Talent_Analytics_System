@@ -26,7 +26,7 @@ const user=await User.create({
 const token=jwt.sign(
     {id:user._id,email:user.email,username:user.username,role:user.role},
     process.env.JWT_SECRET||"shri@march",
-    {expiresIn:process.env.JWT_EXPRIRES_IN||'1h'}    
+    {expiresIn:process.env.JWT_EXPRIRES_IN||'2d'}    
 )
 //return info with token
 res.status(201).send({

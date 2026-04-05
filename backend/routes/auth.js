@@ -10,9 +10,15 @@ router.post('/',async(req,res)=>{
     //1.validate input
     const{error,value}=loginSchema.validate(req.body);
     if(error) return res.status(400).send(error.details[0].message)
-    //find user
-    const user=await User.findOne({username:value.username})
-    if(!user) return res.status(401).send('Invalid username or password')
+    // find user (allow matching username OR email in the username field)
+    const escapedUsername = value.username.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const user = await User.findOne({
+      $or: [
+        { username: { $regex: new RegExp("^" + escapedUsername + "$", "i") } },
+        { email: value.username.toLowerCase() }
+      ]
+    });
+    if(!user) return res.status(401).send('Invalid email or password')
     //check password
     const ok=await bcrypt.compare(value.password,user.passwordHash)
     if(!ok) return res.status(401).send('Invalid email or password')
@@ -20,7 +26,7 @@ router.post('/',async(req,res)=>{
     const token=jwt.sign(
         {id:user._id,email:user.email,username:user.username,role:user.role},
         process.env.JWT_SECRET||"shri@march",
-        {expiresIn:process.env.JWT_EXPRIRES_IN||'1h'}    
+        {expiresIn:process.env.JWT_EXPRIRES_IN||'2d'}    
     )
     // return token and  user information
     res.send({
@@ -35,8 +41,12 @@ router.post('/',async(req,res)=>{
 
 // ────── GOOGLE OAUTH (SINGLE SETUP FOR BOTH STUDENT AND ADMIN) ──────
 
-// Google Auth Trigger
-router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+// Google Auth Trigger (Forces account selection)
+router.get('/google', passport.authenticate('google', { 
+  scope: ['profile', 'email'],
+  prompt: 'select_account',
+  accessType: 'offline'
+}));
 
 // Google Auth Callback
 router.get('/google/callback', 
@@ -50,7 +60,7 @@ router.get('/google/callback',
       const token = jwt.sign(
           { id: updatedUser._id, email: updatedUser.email, username: updatedUser.username, role: updatedUser.role },
           process.env.JWT_SECRET || "shri@march",
-          { expiresIn: process.env.JWT_EXPRIRES_IN || '7d' }
+          { expiresIn: process.env.JWT_EXPRIRES_IN || '2d' }
       );
       res.redirect(`https://techtalentify.netlify.app/dashboard?token=${token}&role=${updatedUser.role}`);
     }).catch(err => {
@@ -91,7 +101,7 @@ router.post('/signup', async(req, res)=>{
     const token = jwt.sign(
         { id: newUser._id, email: newUser.email, username: newUser.username, role: newUser.role },
         process.env.JWT_SECRET || "shri@march",
-        { expiresIn: process.env.JWT_EXPRIRES_IN || '7d' }
+        { expiresIn: process.env.JWT_EXPRIRES_IN || '2d' }
     );
     
     // Return token and user information
