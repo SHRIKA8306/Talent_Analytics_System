@@ -11,16 +11,17 @@ router.post('/',async(req,res)=>{
     const{error,value}=loginSchema.validate(req.body);
     if(error) return res.status(400).send(error.details[0].message)
     // find user (allow matching username OR email in the username field)
-    const escapedUsername = value.username.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const normalizedUsername = value.username.trim();
+    const escapedUsername = normalizedUsername.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const user = await User.findOne({
       $or: [
         { username: { $regex: new RegExp("^" + escapedUsername + "$", "i") } },
-        { email: value.username.toLowerCase() }
+        { email: normalizedUsername.toLowerCase() }
       ]
     });
     if(!user) return res.status(401).send('Invalid email or password')
     //check password
-    const ok=await bcrypt.compare(value.password,user.passwordHash)
+    const ok=await bcrypt.compare(value.password.trim(),user.passwordHash)
     if(!ok) return res.status(401).send('Invalid email or password')
     //create jwt token
     const token=jwt.sign(
