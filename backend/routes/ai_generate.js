@@ -19,8 +19,8 @@ router.post('/advice', auth, async (req, res) => {
         }
 
         // Using gemini-2.0-flash (most reliable for your new API key)
-        const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-        console.log("Model initialized with gemini-2.0-flash");
+        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+        console.log("Model initialized with gemini-2.5-flash");
 
         const skillsList = skills.map(s => `- ${s.name} (${s.level}%)`).join('\n');
         const missingSkillsList = (missingSkills || []).map(s => `- ${s}`).join('\n') || '- None identified';
