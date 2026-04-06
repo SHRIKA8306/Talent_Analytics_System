@@ -18,9 +18,9 @@ router.post('/advice', auth, async (req, res) => {
             return res.status(400).json({ error: "Missing required profile data" });
         }
 
-        // Using gemini-1.5-flash as it is the current standard. 
-        // Explicitly setting apiVersion: 'v1' to avoid 404 errors from the default v1beta endpoint.
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" }, { apiVersion: 'v1' });
+        // Using gemini-1.5-flash-latest for maximum reliability and to resolve 404 errors.
+        // Explicitly setting apiVersion: 'v1' to ensure it uses the stable endpoint.
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" }, { apiVersion: 'v1' });
 
         const skillsList = skills.map(s => `- ${s.name} (${s.level}%)`).join('\n');
         const missingSkillsList = (missingSkills || []).map(s => `- ${s}`).join('\n') || '- None identified';
