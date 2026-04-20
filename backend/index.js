@@ -9,16 +9,26 @@ const profileRoutes=require('./routes/profile.js')
 const aiRoutes=require('./routes/ai_generate.js')
 const auths=require('./middleware/auth.js')
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
 const passport = require('passport');
 require('./config/passport');
 
 const app=express()
 
-//secret,resave,save uninitialize-in session from google
+// ────── SESSION CONFIGURATION (Persistent) ──────
 app.use(session({
     secret: process.env.JWT_SECRET || "secret",
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: false, // Don't create session until something is stored
+    store: MongoStore.create({
+        mongoUrl: process.env.DB,
+        ttl: 14 * 24 * 60 * 60, // 14 days
+        autoRemove: 'native' 
+    }),
+    cookie: {
+        secure: process.env.NODE_ENV === 'production', // Only send over HTTPS in production
+        maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
+    }
 }))
 
 //initialize passport-by using passport the datas are disscused b/w our server and google,by using passport we can interact with google 
