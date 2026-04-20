@@ -18,9 +18,9 @@ router.post('/advice', auth, async (req, res) => {
             return res.status(400).json({ error: "Missing required profile data" });
         }
 
-        // Using gemini-2.0-flash (most reliable for your new API key)
-        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
-        console.log("Model initialized with gemini-2.5-flash");
+        // Using gemini-1.5-flash (most reliable and stable)
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        console.log("Model initialized with gemini-1.5-flash");
 
         const skillsList = skills.map(s => `- ${s.name} (${s.level}%)`).join('\n');
         const missingSkillsList = (missingSkills || []).map(s => `- ${s}`).join('\n') || '- None identified';
