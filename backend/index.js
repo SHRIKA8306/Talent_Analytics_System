@@ -20,7 +20,7 @@ app.use(session({
     secret: process.env.JWT_SECRET || "secret",
     resave: false,
     saveUninitialized: false, // Don't create session until something is stored
-    store: MongoStore.create({
+    store: MongoStore.default.create({
         mongoUrl: process.env.DB,
         ttl: 14 * 24 * 60 * 60, // 14 days
         autoRemove: 'native' 
