@@ -23,7 +23,9 @@ async function generateContentWithRetry(model, prompt, maxRetries = 3) {
             const isRetryable = err.message?.includes("503") || 
                                err.message?.includes("Service Unavailable") || 
                                err.message?.includes("429") ||
-                               err.message?.includes("Too Many Requests");
+                               err.message?.includes("Too Many Requests") ||
+                               err.status === 503 ||
+                               err.status === 429;
 
             if (isRetryable && i < maxRetries - 1) {
                 const delay = Math.pow(2, i) * 1000 + (Math.random() * 1000); // 1s, 2s, 4s + jitter
@@ -51,9 +53,9 @@ router.post('/advice', auth, async (req, res) => {
             return res.status(400).json({ error: "Missing required profile data" });
         }
 
-        // Using model specified in .env (defaulting to gemini-1.5-flash if not set)
-        const modelName = process.env.GEMINI_MODEL || "gemini-1.5-flash";
-        const model = genAI.getGenerativeModel({ model: modelName }, { apiVersion: "v1" });
+        // Using model specified in .env (defaulting to gemini-2.5-flash if not set)
+        const modelName = process.env.GEMINI_MODEL || "gemini-2.5-flash";
+        const model = genAI.getGenerativeModel({ model: modelName });
 
         const skillsList = skills.map(s => `- ${s.name} (${s.level}%)`).join('\n');
         const missingSkillsList = (missingSkills || []).map(s => `- ${s}`).join('\n') || '- None identified';
@@ -100,11 +102,13 @@ Career Tip: [One final motivating sentence]
     } catch (err) {
         console.error("Gemini API Error Detail:", err);
         
-        const isBusy = err.message?.includes("503") || err.message?.includes("Service Unavailable");
+        const isBusy = err.message?.includes("503") || err.message?.includes("Service Unavailable") || err.status === 503;
+        const isQuota = err.message?.includes("429") || err.message?.includes("Too Many Requests") || err.status === 429;
         
-        res.status(isBusy ? 503 : 500).json({
-            error: isBusy ? "AI Server is currently very busy" : "Failed to generate AI advice",
-            message: isBusy ? "We tried 3 times but the server is still overloaded. Please wait a minute and try again." : err.message,
+        res.status(isBusy ? 503 : (isQuota ? 429 : 500)).json({
+            error: isBusy ? "AI Server is currently very busy" : (isQuota ? "Rate limit reached" : "Failed to generate AI advice"),
+            message: isBusy ? "We tried 3 times but the server is still overloaded. Please wait a minute and try again." : 
+                     (isQuota ? "You have reached your API quota. Please try again later." : err.message),
             details: err.message
         });
     }
