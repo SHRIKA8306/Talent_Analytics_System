@@ -270,7 +270,6 @@ export default function EditProfile() {
                     <div className='skill-list d-flex flex-column gap-2'>
                       {formData.skills.map((skill, index) => {
                         const levelText = skill.level > 75 ? 'Expert' : skill.level > 40 ? 'Intermediate' : 'Learning';
-                        const firstLetter = skill.name ? skill.name.charAt(0).toUpperCase() : 'S';
                         
                         return (
                         <div key={index} className='card border-0 shadow-sm mb-2' style={{ borderRadius: '12px', backgroundColor: '#fff' }}>

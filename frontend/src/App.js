@@ -23,7 +23,7 @@ function GoogleCallback() {
       if (role) localStorage.setItem('role', role);
     }
     navigate('/', { replace: true });
-  }, []);
+  }, [location.search, navigate]);
 
   return <div style={{ textAlign: 'center', marginTop: '20vh', fontSize: '1.2rem' }}>Signing you in... ⏳</div>;
 }

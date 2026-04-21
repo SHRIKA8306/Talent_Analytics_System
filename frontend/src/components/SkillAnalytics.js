@@ -66,18 +66,6 @@ export default function SkillAnalytics() {
     );
   }
 
-  const chartBarColor = '#7c3aed'; // Modern Indigo/Purple to match the background theme
-
-  const getInsightMessage = () => {
-    if (!analytics || !analytics.strongestSkill || !analytics.weakestSkill) return '';
-    const { strongestSkill, weakestSkill, averageSkillLevel } = analytics;
-    let levelText = "moderate";
-    if (averageSkillLevel > 70) levelText = "excellent";
-    else if (averageSkillLevel < 40) levelText = "foundational";
-
-    return `You are strongest in ${strongestSkill.name} but have room to grow in ${weakestSkill.name}. Your overall skill proficiency is ${levelText}.`;
-  };
-
   return (
     <div className='card card-refined border-0 shadow-sm overflow-hidden'>
       <div className='card-header bg-white border-0 pt-4 px-4'>
