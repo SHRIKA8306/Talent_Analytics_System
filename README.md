@@ -1,8 +1,8 @@
 # Tech Talentify -Talent Analytics System & AI advisor
 
 ## Live Demo
-**[Tech Talentify](https://techtalentify.netlify.app)**
-URL - https://techtalentify.netlify.app
+**[Tech Talentify](https://talent-analytics-system.vercel.app)**
+URL - https://talent-analytics-system.vercel.app
 
 ## Tech Stack
 

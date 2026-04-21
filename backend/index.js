@@ -37,7 +37,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(cors({
-    origin: 'https://techtalentify.netlify.app',
+    origin: 'https://talent-analytics-system.vercel.app',
     credentials: true
 }))
 app.use(express.json({ limit: '10mb' }))

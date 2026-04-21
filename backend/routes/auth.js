@@ -63,9 +63,9 @@ router.get('/google/callback',
           process.env.JWT_SECRET || "shri@march",
           { expiresIn: process.env.JWT_EXPRIRES_IN || '2d' }
       );
-      res.redirect(`https://techtalentify.netlify.app/dashboard?token=${token}&role=${updatedUser.role}`);
+      res.redirect(`https://talent-analytics-system.vercel.app/dashboard?token=${token}&role=${updatedUser.role}`);
     }).catch(err => {
-      res.redirect(`https://techtalentify.netlify.app/login?error=Failed to set role`);
+      res.redirect(`https://talent-analytics-system.vercel.app/login?error=Failed to set role`);
     });
   }
 );
