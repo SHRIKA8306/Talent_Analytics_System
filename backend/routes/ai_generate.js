@@ -51,8 +51,9 @@ router.post('/advice', auth, async (req, res) => {
             return res.status(400).json({ error: "Missing required profile data" });
         }
 
-        // Using gemini-1.5-flash (most reliable and stable)
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        // Using model specified in .env (defaulting to gemini-1.5-flash if not set)
+        const modelName = process.env.GEMINI_MODEL || "gemini-1.5-flash";
+        const model = genAI.getGenerativeModel({ model: modelName }, { apiVersion: "v1" });
 
         const skillsList = skills.map(s => `- ${s.name} (${s.level}%)`).join('\n');
         const missingSkillsList = (missingSkills || []).map(s => `- ${s}`).join('\n') || '- None identified';
@@ -108,7 +109,5 @@ Career Tip: [One final motivating sentence]
         });
     }
 });
-
-module.exports = router;
 
 module.exports = router;
